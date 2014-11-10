@@ -1,0 +1,18 @@
+__author__ = 'rahul'
+
+import nltk
+import scores
+import json
+
+file_name = 'parsed_tweets.json'
+
+
+def score_them():
+    weighted_sentiment = scores.get_scores()
+    tweets = open (file_name)
+    for tweet in tweets.next():
+       try:
+           tweet = json.loads(tweets.next())
+           print "TWEETS:", tweet
+       except:
+        pass
