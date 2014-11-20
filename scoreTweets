@@ -5,14 +5,33 @@ import scores
 import json
 
 file_name = 'parsed_tweets.json'
-
+words = ''
+scored_tweets = {}
 
 def score_them():
     weighted_sentiment = scores.get_scores()
-    tweets = open (file_name)
-    for tweet in tweets.next():
-       try:
-           tweet = json.loads(tweets.next())
-           print "TWEETS:", tweet
-       except:
-        pass
+    tweets = open(file_name)
+    count = 0
+    counter = 0
+    for line in tweets:
+        try:
+            tweet = json.loads(line)
+            counter = counter + 1
+            #print counter,  " TWEETS:", tweet['tweet_text']
+            words = nltk.word_tokenize(tweet['tweet_text'])
+            score = 0
+            for word in words:
+                word = str(word.lower())
+                #print 'word before if: ', word
+                if word in weighted_sentiment:
+                    count = count + 1
+                    score += weighted_sentiment[word]
+                    tweet['score'] = score
+                    scored_tweets['count'] = count
+                    scored_tweets['tweet_text'] = tweet['tweet_text']
+                    print count, 'Tweet: ', tweet['tweet_text'], 'WORD: ', word, '--------->', tweet['score']
+        except:
+            pass
+
+
+score_them()

@@ -1,6 +1,8 @@
 __author__ = 'rahul'
 
 import json
+import re
+import time
 
 
 class ParseTweets:
@@ -17,19 +19,31 @@ class ParseTweets:
 
     def parse(self):
         with open('parsed_tweets.json', 'w') as outfile:
-            print 'Parsing initiated'
+            print '\nParsing initiated'
             for self.tweet in self.results.next():
                 try:
                     tweet = json.loads(self.results.next())
                 except:
                     pass
-
                 if self.since_id != tweet['id']:
-                    print self.since_id, '--->', tweet['id']
+                    #print self.since_id, '--->', tweet['id']
                     data = {}
                     self.since_id = tweet['id']
                     data['tweet_id'] = tweet['id']
-                    data['tweet_text'] = tweet[u'text']
+                    feed = tweet[u'text']
+                    feed = re.sub(r'http://[\w.]+/+[\w.]+', " ", feed, re.IGNORECASE)    #remove http:// URL shortening links
+                    feed = re.sub(r'https://[\w.]+/+[\w.]+'," ", feed, re.IGNORECASE)    #remove https:// URL shortening links
+                    feed = re.sub('[@#$<>:%&]', ' ', feed)
+                    data['tweet_text'] = feed
                     json.dump(data, outfile)
                     outfile.write('\n')
-            print 'Parsing complete, please read file for more infomation..'
+            self.progressBar()
+            print '\nParsing complete, please read file for more information..'
+
+    # A simple progress bar
+    def progressBar(self):
+        hash ="#."
+        for i in range(10):
+            time.sleep(1)
+            print "%s"%(hash),
+

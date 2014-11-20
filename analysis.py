@@ -45,14 +45,14 @@ def score_them():
                 blob = TextBlob(tweet[u'tweet_text'])
                 sentiment = round(blob.sentiment[0], 3)
                 p_scored_tweets['count'] = counter
-                print "sentiment", sentiment
                 p_scored_tweets['sentiment'] = sentiment
-                print tweet[u'tweet_text'], p_scored_tweets
+                sentiment_pair = (w_scored_tweets, p_scored_tweets)
+                print  sentiment_pair[1]
 
 
         except:
             pass
-    return (w_scored_tweets, p_scored_tweets)
+    return
 
 
 
