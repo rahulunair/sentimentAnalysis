@@ -12,12 +12,13 @@ print sys.path
 
 
 if __name__ == '__main__':
-    #trekker = tweetTrek.TweetTrek("rahul")
+    trekker = tweetTrek.TweetTrek("test")
    # parser = parseTweets.ParseTweets("tweets.json")
-    #trekker.trek()
+    trekker.trek()
    # parser.parse()
     #for key, value in scores.get_scores().items():
     #scoreTweets
-    sentiment = score_them()
+    #sentiment = score_them()
+
 
 

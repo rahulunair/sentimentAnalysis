@@ -10,6 +10,9 @@ from textblob import TextBlob
 import nltk
 import scores
 import json
+from itertools import izip
+import collections
+import matplotlib.pyplot as plt
 
 file_name = 'parsed_tweets.json'
 words = ''
@@ -37,22 +40,24 @@ def score_them():
                         count = count + 1
                         score += weighted_sentiment[word]
                         tweet['score'] = score
-                        w_scored_tweets['count'] = count
-                        w_scored_tweets['sentiment'] = score
+                        w_scored_tweets[count] = score    # count: sentiment
+
 
                 # Patterns classifier
                 counter += 1
                 blob = TextBlob(tweet[u'tweet_text'])
                 sentiment = round(blob.sentiment[0], 3)
-                p_scored_tweets['count'] = counter
-                p_scored_tweets['sentiment'] = sentiment
-                sentiment_pair = (w_scored_tweets, p_scored_tweets)
-                print  sentiment_pair[1]
+                p_scored_tweets[counter] = sentiment       # count: sentiment
+                sentiment_pair = (w_scored_tweets, p_scored_tweets) # weighted and pattern based sentiment analysis
+
 
 
         except:
             pass
-    return
+    plt.plot(p_scored_tweets.values())
+    #plt.show()
+    print p_scored_tweets
+    return sentiment_pair
 
 
 

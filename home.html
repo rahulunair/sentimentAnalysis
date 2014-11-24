@@ -5,9 +5,17 @@
     <title>Tweet Trek</title>
     <script>
 
-        var t = 123
-        v = 70
-        data = d3.range(33).map(next)
+        var t = 123,
+            v = 70,
+            data = d3.range(33).map(next);
+        function next () {
+            return {
+                time: ++t
+                value: v = ~~Math.max(10, Math.min(90, v + 10  * (Math.random() - 0.5)))
+            };
+        }
+
+
     </script>
 </head>
 <body>
