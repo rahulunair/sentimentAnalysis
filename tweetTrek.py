@@ -12,7 +12,7 @@ class TweetTrek:
         self.api_secret = 'c4b3KLEzdHilCOG5q9mbGboGOyHx4A1TiNvd3SR6DTAvc4TEqx'
         self.access_token_key = '52697739-SHrDzs5fSwWBpeO046OrUnVqDOTsaB0pjoeIxjvjw'
         self.access_token_secret = 'DDWDrcJPGX8jCo4NZgKEArhX3NPsdd8uvkMvjZ09TSRbB'
-        self.since_id = 10000000000000000000
+        self.since_id = 1000000000000000000000
         self.api = twitter.Api(self.api_key, self.api_secret, self.access_token_key, self.access_token_secret)
         self.search_term = search_term  # tweet term
 
@@ -28,6 +28,7 @@ class TweetTrek:
                     tweet = str(tweet).replace('\n', ' ').replace('\r', ' ')  # remove new lines
                     tweet = (json.loads(tweet))
                     self.since_id = tweet['id']  # redefine since_id
+                    print self.since_id
                     tweet = tweet
                     json.dump(tweet, outfile)
                     outfile.write('\n')  # print tweets on new lines
