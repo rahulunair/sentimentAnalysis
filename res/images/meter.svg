@@ -1,0 +1,68 @@
+<?xml version="1.0"?><svg width="400" height="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Speedometer Gauge With Colors</title>
+ <defs>
+  <clipPath clipPathUnits="userSpaceOnUse" id="clipPath4436">
+   <path id="path4438" d="m328.936035,-132.187195c-68.145844,33.307259 -84.486542,117.622009 -36.507935,188.242737l247.031494,-120.740173c-48.097778,-70.562439 -142.377441,-100.809937 -210.52356,-67.502563z" fill-rule="nonzero" fill="#000000"/>
+  </clipPath>
+  <linearGradient id="linearGradient15350">
+   <stop offset="0" id="stop15352" stop-color="#fbfbfb"/>
+   <stop id="stop16331" offset="0.175144" stop-opacity="0.988235" stop-color="#817d7d"/>
+   <stop id="stop16327" offset="0.414815" stop-opacity="0.980392" stop-color="#504848"/>
+   <stop offset="0.622222" id="stop16329" stop-opacity="0.972549" stop-color="#9f9696"/>
+   <stop offset="1" id="stop15354" stop-opacity="0.964706" stop-color="#ffffff"/>
+  </linearGradient>
+  <linearGradient xlink:href="#linearGradient15350" id="linearGradient10188" x1="1.038394" y1="0.926001" x2="0.224286" y2="0.640725"/>
+ </defs>
+ <metadata id="metadata3520">image/svg+xml</metadata>
+ <g>
+  <title>Layer 1</title>
+  <text xml:space="preserve" x="202.089" y="100.402" id="text3592" font-family="Acens" fill="#ff2a2a" text-anchor="start" font-weight="bold" font-style="normal" font-size="17.334688px">
+   <tspan id="tspan3594" x="191.089" y="781.764">50</tspan>
+  </text>
+  <text id="text3596" y="105.405" x="169.553" xml:space="preserve" font-family="Acens" fill="#ff2a2a" text-anchor="start" font-weight="bold" font-style="normal" font-size="17.334688px">
+   <tspan y="786.767" x="158.553" id="tspan3598">40</tspan>
+  </text>
+  <text xml:space="preserve" x="139.708" y="120.283" id="text3600" font-family="Acens" fill="#ff2a2a" text-anchor="start" font-weight="bold" font-style="normal" font-size="17.334688px">
+   <tspan id="tspan3602" x="128.708" y="801.645">30</tspan>
+  </text>
+  <text id="text3604" y="135.36" x="114.126" xml:space="preserve" font-family="Acens" fill="#ff2a2a" text-anchor="start" font-weight="bold" font-style="normal" font-size="17.334688px">
+   <tspan y="816.722" x="103.126" id="tspan3606">20</tspan>
+  </text>
+  <text xml:space="preserve" x="93.9452" y="157.428" id="text3608" font-family="Acens" fill="#ff2a2a" text-anchor="start" font-weight="bold" font-style="normal" font-size="17.334688px">
+   <tspan id="tspan3610" x="82.9452" y="838.79">10</tspan>
+  </text>
+  <text id="text3612" y="187.748" x="76.1924" xml:space="preserve" font-family="Acens" fill="#ff2a2a" text-anchor="start" font-weight="bold" font-style="normal" font-size="17.334688px">
+   <tspan y="869.11" x="65.1924" id="tspan3614">0</tspan>
+  </text>
+  <text id="text3616" y="105.431" x="233.717" xml:space="preserve" font-family="Acens" fill="#ff2a2a" text-anchor="start" font-weight="bold" font-style="normal" font-size="17.334688px">
+   <tspan y="786.793" x="222.717" id="tspan3618">60</tspan>
+  </text>
+  <text xml:space="preserve" x="261.79" y="120.283" id="text3620" font-family="Acens" fill="#ff2a2a" text-anchor="start" font-weight="bold" font-style="normal" font-size="17.334688px">
+   <tspan id="tspan3622" x="250.79" y="801.645">70</tspan>
+  </text>
+  <text id="text3624" y="135.386" x="286.466" xml:space="preserve" font-family="Acens" fill="#ffffff" text-anchor="start" font-weight="bold" font-style="normal" font-size="17.334688px">
+   <tspan y="816.748" x="275.466" id="tspan3626">80</tspan>
+  </text>
+  <text xml:space="preserve" x="308.743" y="157.445" id="text3628" font-family="Acens" fill="#ffffff" text-anchor="start" font-weight="bold" font-style="normal" font-size="17.334688px">
+   <tspan id="tspan3630" x="297.743" y="838.807">90</tspan>
+  </text>
+  <text id="text3632" y="187.748" x="322.833" xml:space="preserve" font-family="Acens" fill="#ffffff" text-anchor="start" font-weight="bold" font-style="normal" font-size="17.334688px">
+   <tspan y="869.11" x="311.833" id="tspan3634">100</tspan>
+  </text>
+  <g id="svg_4">
+   <path id="path10114" d="m186.070007,67.412109c-87.052002,0 -157.71701,70.618896 -157.792999,157.652893l315.565979,0c-0.075989,-87.033997 -70.720978,-157.652893 -157.77298,-157.652893l0,0l0,0z" fill-rule="nonzero" fill="#00ff00"/>
+   <path clip-path="url(#clipPath4436)" d="m275.724426,240.631744a107.17321,103.43914 0 1 1 -214.346405,-101.114655a107.17321,103.43914 0 1 1 214.346405,101.114655z" id="path4426" fill-rule="nonzero" fill="#00ff00"/>
+   <path d="m282.719757,104.578857l-109.216156,107.644226l45.392944,0l118.474976,-16.27771c-6.634338,-40.016174 -20.253174,-65.723755 -54.651764,-91.366516z" id="path3636" fill-rule="nonzero" fill="#00ff00" opacity="0.96"/>
+   <path id="path10116" d="m285.062988,88.936005l-111.29599,128.314178l52.13501,7.356812l118.475006,-19.247803c-6.634003,-47.316956 -24.915009,-86.101807 -59.314026,-116.423187z" fill-rule="nonzero" fill="#00ff00"/>
+   <path d="m186.108002,52.976501c-85.942993,-0.000107 -157.171509,62.966492 -170.096298,145.286499l-0.541504,-0.108002c-1.482498,9.355988 -2.260498,18.121002 -2.275406,26.868011l0.650116,0l14.409286,0l315.599808,0l14.518005,0l0.432983,0c-0.017029,-9.853027 -0.830994,-19.759003 -2.600037,-29.794006l-0.541992,0.109009c-14.144958,-80.871002 -84.639954,-142.361511 -169.554962,-142.361511l0,0zm0,14.4095c77.782013,0 142.419006,56.353012 155.362,130.442978l-58.286987,10.29303c-27.538025,-6.427002 -61.161011,-10.291992 -97.399994,-10.291992c-38.096008,0 -73.228027,4.227966 -101.51593,11.266968l-54.062393,-8.55899c11.829208,-75.433014 77.168289,-133.151993 155.903305,-133.151993z" id="path10118" stroke-miterlimit="4" stroke-width="2.919162" stroke="url(#linearGradient10188)" fill-rule="nonzero" fill="#00ff00"/>
+  </g>
+  <path id="svg_17" d="m262,89c-78,114 -76,111 -76,111c0,0 91,6 91,6c0,0 63,-8 63,-8c0,0 -9,-34 -9,-34c0,0 -20,-34 -20,-34c0,0 -18,-21 -18,-21c0,0 -31,-20 -31,-20z" stroke-linecap="round" stroke-width="0" stroke="#000000" fill="#ff0000"/>
+  <path d="0" id="svg_5" stroke-width="5" stroke="#000000" fill="none"/>
+  <line id="svg_10" y2="197" x2="189" y1="92" x1="265" stroke-linecap="round" stroke-width="5" stroke="#000000" fill="none"/>
+  <line id="svg_12" y2="196" x2="191" y1="87" x1="115" stroke-linecap="round" stroke-width="5" stroke="#000000" fill="none"/>
+  <text transform="matrix(1, 0, 0, 3.25926, 0, -273.37)" xml:space="preserve" text-anchor="middle" font-family="Arial" font-size="24" id="svg_14" y="140.466" x="273" stroke-linecap="round" stroke-width="0" stroke="#000000" fill="#000000">High</text>
+  <path id="svg_18" d="m114,87l77,110l-54,2c0,0 -20,3 -21,3c-1,0 -28,7 -28,7c0,0 -55,-9 -55,-9c0,0 7,-29 7,-29c0,0 12,-24 12,-24c0,0 15,-23 15,-23c0,0 17,-19 17,-19c0,0 15,-10 15,-10c0,0 15,-8 15,-8z" stroke-linecap="round" stroke-width="0" stroke="#000000" fill="#ffff00"/>
+  <text xml:space="preserve" text-anchor="middle" font-family="Arial" font-size="24" id="svg_16" y="102" x="183" stroke-linecap="round" stroke-width="0" stroke="#000000" fill="#000000">Just Right</text>
+  <text transform="matrix(2.48696, 0, 0, 0.424242, -61.3671, 116.091)" xml:space="preserve" text-anchor="middle" font-family="Arial" font-size="24" id="svg_15" y="177" x="67" stroke-linecap="round" stroke-width="0" stroke="#000000" fill="#000000">Low</text>
+ </g>
+</svg>
