@@ -1,13 +1,14 @@
-from time import sleep
-import tweetTrek
-
 __author__ = 'rahul'
 
 from Tkinter import *
 from ttk import *
 import tkFont
 import Tkinter as tk
-
+import threading
+from time import sleep
+from analysis import score_them
+import parseTweets
+import tweetTrek
 
 
 # constants
@@ -16,8 +17,9 @@ SEARCH_BOX = "Enter any word"
 TEXT = " Start the Analysis "
 SCORE = " Sentiment score : "
 SEARCH_BTN = " Search "
-TEXT_TO_PRINT =  "0.96"
-STATUS = "Downloading Tweets Now.."
+TEXT_TO_PRINT = "0.96"
+STATUS = " "
+
 
 
 
@@ -26,37 +28,65 @@ class Gui():
     A class which will act as the graphical user interface to the sentiment analysis.
     author: rahul
     '''
-    def progressbar(self):
-        # progress bar
-        self.progressbar = Progressbar(self.mainFrame, orient='horizontal', mode='indeterminate')
-        self.progressbar.start(30)
-        self.progressbar.grid(row=8, column=1,sticky=(S, E))
-
-    def kill_progressbar(self):
-        self.progressbar.step()
-        self.progressbar.stop()
-
-
-    def reset_progressbar(self):
-        self.progressbar.step()
-
-
-
-    def runApp(self):
-        #print TEXT_TO_PRINT
-        trekker = tweetTrek.TweetTrek("self.query")
-        trekker.trek()
-        self.progressbar()
-        self.text1.insert(0, TEXT_TO_PRINT)
-        self.text1.configure(state='readonly')
-        #return TEXT_TO_PRINT
-
     def __init__(self, root):
         self.LOGO = PhotoImage(file="./res/images/emotions.gif")
         self.root = root
         self.root.title("Sentiment Analyzer")
         self.root.maxsize(width=380, height=500)
         self.font = tkFont.Font(family="Helvetica", size=30, weight=tkFont.BOLD)
+
+    def sweep_tw(self):
+        trekker = tweetTrek.TweetTrek(self.query_entry.get())
+        self.status_1 = trekker.trek()
+
+    def tokenize(self):
+        parser = parseTweets.ParseTweets("tweets.json")
+        parser.parse()
+
+
+    def repaint(self, stat):
+        print "entered text: ",self.query_entry.get()
+        # status text
+        STATUS = stat
+        self.text_label = Label(self.mainFrame, text=STATUS, background="#54727B")
+        self.text_label.grid(row=8, column=1)
+        self.pBar = Progressbar(self.mainFrame, orient='horizontal', mode='determinate')
+        self.pBar.grid(row=8, column=1, sticky=(S, E))
+        self.pBar.start(25)
+        self.pBar.update_idletasks()
+        self.status_1 = 0
+
+
+
+    def runApp(self):
+        '''
+        App to call other parts of the program.
+        '''
+        t_0 = threading.Thread(target= self.repaint("Downloading Tweets Now.."))
+        #self.repaint()
+        t_1 = threading.Thread(target= self.sweep_tw())
+        t_2 = threading.Thread(target = self.tokenize())
+        t_0.start()
+        t_1.start()
+        while not t_1.isAlive():
+            self.repaint("  Parsing and Tokenizing   ")
+            self.pBar.update_idletasks()
+            t_2.start()
+            break
+        sleep(7)
+        self.repaint("  Chanting the magic spell...   ")
+        self.pBar.update_idletasks()
+        sentiment = score_them()
+        self.text1.insert(0, round(sentiment, 2))
+        self.text1.configure(state='readonly')
+        sleep(7)
+        self.repaint("            Finished                ")
+        self.pBar.update_idletasks()
+        self.pBar.stop()
+        #print sentiment
+
+
+
 
     def callback(self, focus):
         '''
@@ -80,17 +110,18 @@ class Gui():
 
         # Main page
         #self.mainFrame = Frame(self.root, padding="3 3 12 12")
-        self.mainFrame = tk.Frame(self.root,width = "10")
+        self.mainFrame = tk.Frame(self.root, width="10")
         self.mainFrame.grid(column=1, row=0, sticky=(N, W, E, S), padx=5, pady=10)
         self.mainFrame.columnconfigure(5, weight=1)
         self.mainFrame.rowconfigure(5, weight=1)
-        self.mainFrame.config(background = "#54727B")
+        self.mainFrame.config(background="#54727B")
+
 
 
         # heading
         self.query_text = Label(self.mainFrame, text=TEXT)
-        self.query_text.config(font = self.font, foreground="#54727B")
-        self.query_text.grid(row=0, column = 1)
+        self.query_text.config(font=self.font, foreground="#54727B")
+        self.query_text.grid(row=0, column=1)
 
         #Logo
         self.logo = Label(self.mainFrame, image=self.LOGO)
@@ -98,36 +129,36 @@ class Gui():
 
 
         # Search  box
-       # self.query = StringVar()
+        self.query = StringVar()
         self.query_entry = MaxLengthEntry(self.mainFrame, maxlength=15)
+        #self.query_entry.config(textvariable=self.query)
         self.query_entry.grid(row=2, column=1)
-        self.query = self.query_entry.get()
-
-
+        print   "query_entry is: ", self.query_entry.get()
 
         self.query_entry.config(foreground="grey")
-        self.query_entry.bind("<FocusIn>", self.callback)
+        i = 0
+        if i == 0:
+            self.query_entry.bind("<FocusIn>", self.callback)
+            i = 1
 
 
         # Button to submit the query
-        buttonfont = tkFont.Font(family="Helvetica")
         self.search_btn = Button(self.mainFrame, text=SEARCH_BTN, width=10, command=self.runApp)
-        #self.search_btn['font'] = [buttonfont]
         self.search_btn.grid(row=3, column=1)
 
-         # space
+        # space
         self.text_label = Label(self.mainFrame, background="#54727B")
         self.text_label.grid(row=4, column=1)
 
         # label 2
-        self.text_label = Label(self.mainFrame, text = SCORE, foreground="#54727B")
-        self.text_label.config(font = self.font)
+        self.text_label = Label(self.mainFrame, text=SCORE, foreground="#54727B")
+        self.text_label.config(font=self.font)
         self.text_label.grid(row=5, column=1)
 
         # text field to show the score
-        self.text1 = tk.Entry(self.mainFrame, width=4,  foreground="BLUE")
+        self.text1 = tk.Entry(self.mainFrame, width=4, foreground="BLUE")
         self.font = tkFont.Font(family="Helvetica", size=25)
-        self.text1.config(font = self.font, state= 'normal')
+        self.text1.config(font=self.font, state='normal')
         #self.text1.configure(state='readonly')
         self.text1.grid(row=6, column=1)
 
@@ -135,19 +166,11 @@ class Gui():
         self.text_label = Label(self.mainFrame, background="#54727B")
         self.text_label.grid(row=7, column=1)
 
-        # status text
-        self.text_label = Label(self.mainFrame,text = STATUS, background="#54727B")
-        self.text_label.grid(row=8, column=1)
 
-        #progressbar
-        #self.progressbar()
 
-        #kill progressbar
-        #self.kill_progressbar()
+
 
         for child in self.mainFrame.winfo_children(): child.grid_configure(padx=5, pady=5)
-
-
 
 
 class ValidatingEntry(Entry):
@@ -161,7 +184,7 @@ class ValidatingEntry(Entry):
         self.__value = value
         self.__variable = StringVar()
         self.__variable.set(SEARCH_BOX)
-        self.config(font = self.font)
+        self.config(font=self.font)
         self.__variable.trace("w", self.__callback)
         self.config(textvariable=self.__variable)
 
@@ -177,7 +200,6 @@ class ValidatingEntry(Entry):
             self.__value = value
 
     def validate(self, value):
-        # override: return value, new value, or None if invalid
         return value
 
 
@@ -192,7 +214,7 @@ class MaxLengthEntry(ValidatingEntry):
         return None  # new value too long
 
 
-root = Tk()
+root = Toplevel()
 gui = Gui(root)
 gui.createView()
 root.mainloop()
