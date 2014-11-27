@@ -1,3 +1,6 @@
+from time import sleep
+import tweetTrek
+
 __author__ = 'rahul'
 
 from Tkinter import *
@@ -10,25 +13,50 @@ import Tkinter as tk
 # constants
 
 SEARCH_BOX = "Enter any word"
-TEXT = "Enter a Word to Start the Analysis: "
-SEARCH_BTN = "Search"
+TEXT = " Start the Analysis "
+SCORE = " Sentiment score : "
+SEARCH_BTN = " Search "
+TEXT_TO_PRINT =  "0.96"
+STATUS = "Downloading Tweets Now.."
 
 
-def runApp():
-    print "hello world"
 
 class Gui():
     '''
     A class which will act as the graphical user interface to the sentiment analysis.
     author: rahul
     '''
+    def progressbar(self):
+        # progress bar
+        self.progressbar = Progressbar(self.mainFrame, orient='horizontal', mode='indeterminate')
+        self.progressbar.start(30)
+        self.progressbar.grid(row=8, column=1,sticky=(S, E))
+
+    def kill_progressbar(self):
+        self.progressbar.step()
+        self.progressbar.stop()
+
+
+    def reset_progressbar(self):
+        self.progressbar.step()
+
+
+
+    def runApp(self):
+        #print TEXT_TO_PRINT
+        trekker = tweetTrek.TweetTrek("self.query")
+        trekker.trek()
+        self.progressbar()
+        self.text1.insert(0, TEXT_TO_PRINT)
+        self.text1.configure(state='readonly')
+        #return TEXT_TO_PRINT
 
     def __init__(self, root):
         self.LOGO = PhotoImage(file="./res/images/emotions.gif")
         self.root = root
         self.root.title("Sentiment Analyzer")
-        self.root.maxsize(width=596, height=600)
-        self.font = tkFont.Font(family="Helvetica", size=20, weight=tkFont.BOLD)
+        self.root.maxsize(width=380, height=500)
+        self.font = tkFont.Font(family="Helvetica", size=30, weight=tkFont.BOLD)
 
     def callback(self, focus):
         '''
@@ -39,6 +67,11 @@ class Gui():
         self.query_entry.delete(0, END)
         self.query_entry.config(foreground="black")
 
+    def create_entry(self):
+        self.font = tkFont.Font(family="Helvetica", size=8)
+        entry = tk.Entry(self.mainFrame)
+        entry.config(font=self.font)
+
     def createView(self):
         '''
         Creates the main window, the textbox to enter search query and the search button.
@@ -47,36 +80,74 @@ class Gui():
 
         # Main page
         #self.mainFrame = Frame(self.root, padding="3 3 12 12")
-        self.mainFrame = tk.Frame(self.root)
-        self.mainFrame.grid(column=0, row=0, sticky=(N, W, E, S), padx=5, pady=30)
-        self.mainFrame.columnconfigure(0, weight=1)
-        self.mainFrame.rowconfigure(0, weight=1)
+        self.mainFrame = tk.Frame(self.root,width = "10")
+        self.mainFrame.grid(column=1, row=0, sticky=(N, W, E, S), padx=5, pady=10)
+        self.mainFrame.columnconfigure(5, weight=1)
+        self.mainFrame.rowconfigure(5, weight=1)
         self.mainFrame.config(background = "#54727B")
 
-        #Logo
-        self.logo = Label(root, image=self.LOGO)
-        self.logo.grid(row=0, column=1)
 
-        # Query text formatting
+        # heading
         self.query_text = Label(self.mainFrame, text=TEXT)
-        self.query_text.config(font = self.font)
-        #self.query_text.grid(row=1, column=0, sticky=(N, W))
+        self.query_text.config(font = self.font, foreground="#54727B")
+        self.query_text.grid(row=0, column = 1)
 
-        # Text box
-        self.query = StringVar()
+        #Logo
+        self.logo = Label(self.mainFrame, image=self.LOGO)
+        self.logo.grid(row=1, column=1)
+
+
+        # Search  box
+       # self.query = StringVar()
         self.query_entry = MaxLengthEntry(self.mainFrame, maxlength=15)
-        #self.query_entry.grid(row=1, column=1, sticky=(W, E))
+        self.query_entry.grid(row=2, column=1)
+        self.query = self.query_entry.get()
+
+
 
         self.query_entry.config(foreground="grey")
         self.query_entry.bind("<FocusIn>", self.callback)
 
+
         # Button to submit the query
         buttonfont = tkFont.Font(family="Helvetica")
-        self.search_btn = Button(self.mainFrame, text=SEARCH_BTN, width=10, command=runApp)
+        self.search_btn = Button(self.mainFrame, text=SEARCH_BTN, width=10, command=self.runApp)
         #self.search_btn['font'] = [buttonfont]
-        #self.search_btn.grid(row=1, column=2)
+        self.search_btn.grid(row=3, column=1)
+
+         # space
+        self.text_label = Label(self.mainFrame, background="#54727B")
+        self.text_label.grid(row=4, column=1)
+
+        # label 2
+        self.text_label = Label(self.mainFrame, text = SCORE, foreground="#54727B")
+        self.text_label.config(font = self.font)
+        self.text_label.grid(row=5, column=1)
+
+        # text field to show the score
+        self.text1 = tk.Entry(self.mainFrame, width=4,  foreground="BLUE")
+        self.font = tkFont.Font(family="Helvetica", size=25)
+        self.text1.config(font = self.font, state= 'normal')
+        #self.text1.configure(state='readonly')
+        self.text1.grid(row=6, column=1)
+
+        # space
+        self.text_label = Label(self.mainFrame, background="#54727B")
+        self.text_label.grid(row=7, column=1)
+
+        # status text
+        self.text_label = Label(self.mainFrame,text = STATUS, background="#54727B")
+        self.text_label.grid(row=8, column=1)
+
+        #progressbar
+        #self.progressbar()
+
+        #kill progressbar
+        #self.kill_progressbar()
 
         for child in self.mainFrame.winfo_children(): child.grid_configure(padx=5, pady=5)
+
+
 
 
 class ValidatingEntry(Entry):
