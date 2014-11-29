@@ -15,10 +15,11 @@ class TweetTrek:
         # please go to dev.twitter.com and create the required keys by registering as a developer.
         # Be sure to delete tweets in 24 hrs so that you dont violate any policy of twitter.
 
-        self.api_key =''
-        self.api_secret = ''
-        self.access_token_key = ''
-        self.access_token_secret = ''
+        self.api_key =''#
+        self.api_secret = ''#
+        self.access_token_key = ''#
+        self.access_token_secret = ''#
+
         self.since_id = 10000000000000000000
         self.api = twitter.Api(self.api_key, self.api_secret, self.access_token_key, self.access_token_secret)
         self.search_term = search_term  # tweet term
