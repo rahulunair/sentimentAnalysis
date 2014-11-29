@@ -11,11 +11,13 @@ COUNT = 10
 class TweetTrek:
 
     def __init__(self, search_term='interstellar'):
-
-        self.api_key = 'j9AYP6RAGotmwg6v8IwVbw3j1'
-        self.api_secret = 'c4b3KLEzdHilCOG5q9mbGboGOyHx4A1TiNvd3SR6DTAvc4TEqx'
-        self.access_token_key = '52697739-SHrDzs5fSwWBpeO046OrUnVqDOTsaB0pjoeIxjvjw'
-        self.access_token_secret = 'DDWDrcJPGX8jCo4NZgKEArhX3NPsdd8uvkMvjZ09TSRbB'
+        
+        # please go to dev.twitter.com and create the required keys by registering as a developer.
+        # Be sure to delete tweets in 24 hrs so that you dont violate any policy of twitter.
+        self.api_key =''
+        self.api_secret = ''
+        self.access_token_key = ''
+        self.access_token_secret = ''
         self.since_id = 10000000000000000000
         self.api = twitter.Api(self.api_key, self.api_secret, self.access_token_key, self.access_token_secret)
         self.search_term = search_term  # tweet term
