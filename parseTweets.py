@@ -4,8 +4,7 @@ import json
 
 
 class ParseTweets:
-
-    def __init__(self, results = None):
+    def __init__(self, results=None):
         if results == None:
             self.results = 'tweets.json'  # fall back file
         else:
@@ -16,6 +15,12 @@ class ParseTweets:
         self.tweet = ''
 
     def parse(self):
+        """
+        parse the raw tweet and take the tweet id and text and save it to a json file
+        :return: none
+        """
+
+        print "Initiated parsing of tweets"
         with open('parsed_tweets.json', 'w') as outfile:
             print 'Parsing initiated'
             for self.tweet in self.results.next():

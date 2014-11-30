@@ -1,3 +1,6 @@
+import DynamicGraph
+import analysis
+
 __author__ = 'rahul'
 
 from Tkinter import *
@@ -21,13 +24,12 @@ TEXT_TO_PRINT = "0.96"
 STATUS = " "
 
 
-
-
 class Gui():
     '''
-    A class which will act as the graphical user interface to the sentiment analysis.
+    A class which will act as the graphical user interface to the sentiment analysis application.
     author: rahul
     '''
+
     def __init__(self, root):
         self.LOGO = PhotoImage(file="./res/images/emotions.gif")
         self.root = root
@@ -36,36 +38,49 @@ class Gui():
         self.font = tkFont.Font(family="Helvetica", size=30, weight=tkFont.BOLD)
 
     def sweep_tw(self):
+        '''
+        calls the trek() method of TweetTrek class
+        :return: none
+        '''
         trekker = tweetTrek.TweetTrek(self.query_entry.get())
         self.status_1 = trekker.trek()
 
     def tokenize(self):
+        '''
+        parse and split the tweets into tweet text and tweet id
+        :return:
+        '''
         parser = parseTweets.ParseTweets("tweets.json")
         parser.parse()
 
 
     def repaint(self, stat):
-        print "entered text: ",self.query_entry.get()
+        '''
+        Reload the graphical user interface with the progressbar and all other widgets when called
+        :param stat:
+        :return:
+        '''
+
+        print "entered text: ", self.query_entry.get()
         # status text
         STATUS = stat
         self.text_label = Label(self.mainFrame, text=STATUS, background="#54727B")
         self.text_label.grid(row=8, column=1)
         self.pBar = Progressbar(self.mainFrame, orient='horizontal', mode='determinate')
         self.pBar.grid(row=8, column=1, sticky=(S, E))
-        self.pBar.start(25)
+        self.pBar.start(50)
         self.pBar.update_idletasks()
         self.status_1 = 0
 
 
-
     def runApp(self):
         '''
-        App to call other parts of the program.
+        The main method of the application, called when search button is pressed, the action is here!!.
         '''
-        t_0 = threading.Thread(target= self.repaint("Downloading Tweets Now.."))
-        #self.repaint()
-        t_1 = threading.Thread(target= self.sweep_tw())
-        t_2 = threading.Thread(target = self.tokenize())
+        t_0 = threading.Thread(target=self.repaint("Downloading Tweets Now.."))
+        # self.repaint()
+        t_1 = threading.Thread(target=self.sweep_tw())
+        t_2 = threading.Thread(target=self.tokenize())
         t_0.start()
         t_1.start()
         while not t_1.isAlive():
@@ -77,6 +92,9 @@ class Gui():
         self.repaint("  Chanting the magic spell...   ")
         self.pBar.update_idletasks()
         sentiment = score_them()
+        #analysis.dyna_g.on_close()
+        self.text1.configure(state='normal')
+        self.text1.delete(0, END)
         self.text1.insert(0, round(sentiment, 2))
         self.text1.configure(state='readonly')
         sleep(7)
@@ -84,8 +102,6 @@ class Gui():
         self.pBar.update_idletasks()
         self.pBar.stop()
         #print sentiment
-
-
 
 
     def callback(self, focus):
@@ -109,7 +125,7 @@ class Gui():
         '''
 
         # Main page
-        #self.mainFrame = Frame(self.root, padding="3 3 12 12")
+        # self.mainFrame = Frame(self.root, padding="3 3 12 12")
         self.mainFrame = tk.Frame(self.root, width="10")
         self.mainFrame.grid(column=1, row=0, sticky=(N, W, E, S), padx=5, pady=10)
         self.mainFrame.columnconfigure(5, weight=1)
@@ -130,8 +146,8 @@ class Gui():
 
         # Search  box
         self.query = StringVar()
-        self.query_entry = MaxLengthEntry(self.mainFrame, maxlength=15)
-        #self.query_entry.config(textvariable=self.query)
+        self.query_entry = MaxLengthEntry(self.mainFrame,
+                                          maxlength=20)  # limited the length of word that can be entered to 20
         self.query_entry.grid(row=2, column=1)
         print   "query_entry is: ", self.query_entry.get()
 
@@ -159,16 +175,11 @@ class Gui():
         self.text1 = tk.Entry(self.mainFrame, width=4, foreground="BLUE")
         self.font = tkFont.Font(family="Helvetica", size=25)
         self.text1.config(font=self.font, state='normal')
-        #self.text1.configure(state='readonly')
         self.text1.grid(row=6, column=1)
 
         # space
         self.text_label = Label(self.mainFrame, background="#54727B")
         self.text_label.grid(row=7, column=1)
-
-
-
-
 
         for child in self.mainFrame.winfo_children(): child.grid_configure(padx=5, pady=5)
 
@@ -204,6 +215,10 @@ class ValidatingEntry(Entry):
 
 
 class MaxLengthEntry(ValidatingEntry):
+    '''
+    class which limits the length of the word entered into the search column
+    '''
+
     def __init__(self, master, value="", maxlength=None, **kw):
         self.maxlength = maxlength
         apply(ValidatingEntry.__init__, (self, master), kw)
@@ -213,8 +228,10 @@ class MaxLengthEntry(ValidatingEntry):
             return value
         return None  # new value too long
 
+# method call to run the app
 
-root = Toplevel()
-gui = Gui(root)
-gui.createView()
-root.mainloop()
+if __name__ == '__main__':
+    root = Toplevel()
+    gui = Gui(root)
+    gui.createView()
+    root.mainloop()

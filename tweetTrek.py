@@ -2,37 +2,41 @@ __author__ = 'rahul'
 import json
 import time
 import twitter
-from TweetTruck import TweetStore
+from TweetTruck import TweetTruck
 
 
 RANGE = 1
-COUNT = 10
+COUNT = 8
+DB = TweetTruck("tweets_db")
+
 
 class TweetTrek:
+    '''
+     A twitter trekking class which initializes tweet id, access tokens are given
+    '''
 
     def __init__(self, search_term='interstellar'):
 
-        # please go to dev.twitter.com and create the required keys by registering as a developer.
-        # Be sure to delete tweets in 24 hrs so that you dont violate any policy of twitter.
-
-        self.api_key =''#
-        self.api_secret = ''#
-        self.access_token_key = ''#
-        self.access_token_secret = ''#
+        self.api_key = '' # please enter api key obtained from developer.twitter.com
+        self.api_secret = '' #
+        self.access_token_key = '' #
+        self.access_token_secret = '' #
 
         self.since_id = 10000000000000000000
         self.api = twitter.Api(self.api_key, self.api_secret, self.access_token_key, self.access_token_secret)
         self.search_term = search_term  # tweet term
 
+
     def trek(self):
-
-        DB = TweetStore("tweets_db")
-
+        '''
+        Method to search for a query in twitter and return the resulting tweets, save it to a database
+        :return: 1
+        '''
         with open('tweets.json', 'w') as outfile:
             for i in range(0, RANGE):
                 time.sleep(5)  # don't piss off twitter
                 print 'since_id=', self.since_id, ', twitter loop', i
-                #results = self.api.GetSearch(self.search_term, count=100, since_id=self.since_id)
+                # results = self.api.GetSearch(self.search_term, count=100, since_id=self.since_id)
                 results = self.api.GetSearch(self.search_term, count=COUNT, max_id=self.since_id)
                 # outfile.write('[')
                 for tweet in results:
@@ -43,5 +47,5 @@ class TweetTrek:
                         print self.since_id
                         json.dump(tweet, outfile)
                         outfile.write('\n')  # print tweets on new lines
-                        DB.save_tweet(tweet) # saving tweets in database
+                        DB.save_tweet(tweet)  # saving tweets in database, comment if not database is configured.
         return 1

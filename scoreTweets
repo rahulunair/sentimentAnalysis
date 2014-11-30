@@ -1,5 +1,10 @@
 __author__ = 'rahul'
 
+'''
+Not used for current analyzer, for future purposes
+
+'''
+
 import nltk
 import scores
 import json
@@ -8,7 +13,9 @@ file_name = 'parsed_tweets.json'
 words = ''
 scored_tweets = {}
 
+
 def score_them():
+    print "Started scoring of tweets"
     weighted_sentiment = scores.get_scores()
     tweets = open(file_name)
     count = 0
@@ -17,7 +24,7 @@ def score_them():
         try:
             tweet = json.loads(line)
             counter = counter + 1
-            #print counter,  " TWEETS:", tweet['tweet_text']
+            # print counter,  " TWEETS:", tweet['tweet_text']
             words = nltk.word_tokenize(tweet['tweet_text'])
             score = 0
             for word in words:

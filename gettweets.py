@@ -7,7 +7,14 @@ COUCH_DATABASE = 'tweets_db'
 
 delivery = TweetTruck(COUCH_DATABASE)
 
-print 'Number of tweets in the truck is:  %d\n' % delivery.count_tweets()
+
+def count():
+    '''
+    counts number of tweets stored in the database
+    :return:
+    '''
+    print 'Number of tweets in the truck is:  %d\n' % delivery.count_tweets()
+
 
 def getEm():
     '''
@@ -15,7 +22,7 @@ def getEm():
     :return: A dictionary of tweets
     '''
     for doc in delivery.get_tweets():
-        print '%s : %s\n' % doc.value['id'] ,doc.value['text']
+        print '%s\n' % doc.value['text']
     return delivery.get_tweets()
 
 

@@ -6,10 +6,10 @@ COUCH_SERVER = 'http://127.0.0.1:5984/'
 
 
 class TweetTruck(object):
+    '''
+    database class to save, retrieve and count the number of tweets. Go to http://localhost:5984/_utils/index.html for a front end view of the db
+    '''
 
-    '''
-    database class to save, retrieve and count the number of tweets.
-    '''
     def __init__(self, dbname, url=COUCH_SERVER):
         try:
             self.server = couchdb.Server(url=url)
@@ -21,7 +21,7 @@ class TweetTruck(object):
     def _create_views(self):
         count_map = 'function(doc) { emit(doc.id, 1); }'
         count_reduce = 'function(keys, values) { return sum(values); }'
-        view = couchdb.design.ViewDefinition('twitter', 'count_tweets', count_map, reduce_fun=count_reduce)
+        view = couchdb.design.ViewDefinition('tweets', 'count_tweets', count_map, reduce_fun=count_reduce)
         view.sync(self.db)
 
         get_tweets = 'function(doc) { emit(("0000000000000000000"+doc.id).slice(-19), doc); }'
